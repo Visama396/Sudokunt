@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+}
+html > body > main {
+  width: 100vw;
+  height: 100vh;
+  background: #1b1b1b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+html > body > main > div#board {
+  display: inline-flex;
+  flex-direction: column;
+  color: #636363;
+  background: #EEE;
+  border-radius: 8px;
+  box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.5);
+  padding: 0.5rem;
+}
+html > body > main > div#board > div.row {
+  display: flex;
+}
+html > body > main > div#board > div.row > span.cell {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  width: 30px;
+  height: 30px;
+  text-align: center;
+}
+html > body > main > div#board > div.row > span.cell:hover {
+  background: #cacaca;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+}
+html > body > main > div#board > div.row > span.cell.top {
+  border-top: transparent;
+}
+html > body > main > div#board > div.row > span.cell.left {
+  border-left: transparent;
+}
+html > body > main > div#board > div.row > span.cell.bottom {
+  border-bottom: transparent;
+}
+html > body > main > div#board > div.row > span.cell.right {
+  border-right: transparent;
+}
+html > body > main > header > h1 {
+  font-size: 3rem;
+  color: #eee;
+  text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+}
+html > body > main > button#add {
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: #636363;
+  font-size: 2rem;
+  font-weight: 700;
+  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.5);
+}
+html > body > main > button#add:hover {
+  cursor: pointer;
+  background: #adadad;
+}/*# sourceMappingURL=style.css.map */
