@@ -43,6 +43,16 @@ html {
               cursor: pointer;
             }
 
+            &.selected {
+              background: #cacaca;
+            }
+
+            &.finished {
+              background: #636363;
+              color: #eee;
+              font-weight: 700;
+            }
+
             &.top {
               border-top: transparent;
             }

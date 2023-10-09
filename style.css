@@ -42,6 +42,14 @@ html > body > main > div#board > div.row > span.cell:hover {
   transition: all ease-in-out 0.3s;
   cursor: pointer;
 }
+html > body > main > div#board > div.row > span.cell.selected {
+  background: #cacaca;
+}
+html > body > main > div#board > div.row > span.cell.finished {
+  background: #636363;
+  color: #eee;
+  font-weight: 700;
+}
 html > body > main > div#board > div.row > span.cell.top {
   border-top: transparent;
 }
