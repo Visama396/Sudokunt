@@ -4,11 +4,52 @@ var id = 0;
 
 function checkSelectedCells() {
   let isValid = false;
-  // First check if the cells are in valid positions to be pair
+  let posIsValid = false;
 
+  // getBoundingClientRect have an x and y values
+  let pos1 = selectedCells[0].getBoundingClientRect()
+  let pos2 = selectedCells[1].getBoundingClientRect()
+  
+  // Check if the cells are in valid positions to be pair
+  // First check if they are in the same row and they don't have any other cell in between
+  if (pos1.y == pos2.y && pos1.x > pos2.x) {
+    /*console.log("Elements in the same row")
+    console.log(selectedCells[0].parentElement)*/
+    if ((pos1.x - pos2.x) / 30 == 1) posIsValid = true;
+    else {
+      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
+      console.log("Is further")
+    }
+  } else if (pos1.y == pos2.y && pos1.x < pos2.x) {
+    /*console.log("Elements in the same row")
+    console.log(selectedCells[0].parentElement)*/
+    if ((pos2.x - pos1.x) / 30 == 1) posIsValid = true;
+    else {
+      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
+      console.log("Is further")
+    }
+  } 
+  // Now check if they belong to the same column
+  else if (pos1.x == pos2.x && pos1.y > pos2.y) {
+    /*console.log("Elements in the same column")
+    console.log(selectedCells[0].parentElement)*/
+    if ((pos1.y - pos2.y) / 30 == 1) posIsValid = true;
+    else {
+      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
+      console.log("Is further")
+    }
+  } else if (pos1.x == pos2.x && pos1.y < pos2.y) {
+    /*console.log("Elements in the same column")
+    console.log(selectedCells[0].parentElement)*/
+    if ((pos2.y - pos1.y) / 30 == 1) posIsValid = true;
+    else {
+      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
+      console.log("Is further")
+    }
+  }
 
   // Now check if the pair is valid
-  if (parseInt(selectedCells[0].innerText) + parseInt(selectedCells[1].innerText) == 10 || selectedCells[0].innerText == selectedCells[1].innerText) {
+  if (posIsValid && (parseInt(selectedCells[0].innerText) + parseInt(selectedCells[1].innerText) == 10 || selectedCells[0].innerText == selectedCells[1].innerText)) {
     isValid = true;
   }
 
@@ -16,14 +57,13 @@ function checkSelectedCells() {
   selectedCells.forEach(cell => {
     cell.classList.remove("selected")
 
-    console.log(unfinishedCells)
-
     if (isValid) {
       cell.classList.add("finished")
 
       // Remove the two selected cells from the unfinishedCells array
-      console.log(unfinishedCells)
-    }    
+      let index = unfinishedCells.indexOf(cell)
+      unfinishedCells.splice(index, 1)
+    }
   });
 
   // And remove the cells from the selectedCells array
