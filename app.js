@@ -81,7 +81,21 @@ function onclickcell(event) {
 }
 
 function onclickadd(event) {
-  console.log(event)
+  let board = document.querySelector("#board")
+  let rowIndex = 0;
+  let colIndex = 0;
+
+  for (let row in Array.from(board.children)) {
+    for (let cell in Array.from(row.children)) {
+      if (cell.dataset.id == undefined) break;
+      colIndex++
+    }
+    rowIndex++
+  }
+  console.log(rowIndex, colIndex)
+  unfinishedCells.forEach(cell => {
+    
+  })
 }
 
 document.onreadystatechange = function() {
