@@ -9,6 +9,8 @@ function checkSelectedCells() {
   // getBoundingClientRect have an x and y values
   let pos1 = selectedCells[0].getBoundingClientRect()
   let pos2 = selectedCells[1].getBoundingClientRect()
+  console.log(pos1)
+  console.log(pos2)
   
   // Check if the cells are in valid positions to be pair
   // First check if they are in the same row and they don't have any other cell in between
@@ -47,6 +49,15 @@ function checkSelectedCells() {
       console.log("Is further")
     }
   }
+  // Now check if they are diagonal  
+  else if (Math.abs(pos1.y - pos2.y) == 30 && Math.abs(pos1.x - pos2.x) == 30) 
+  {
+    posIsValid = true
+  }
+  // Now check if it is the last of one row and the first of the next row
+  else if () {
+    posIsValid = true
+  }
 
   // Now check if the pair is valid
   if (posIsValid && (parseInt(selectedCells[0].innerText) + parseInt(selectedCells[1].innerText) == 10 || selectedCells[0].innerText == selectedCells[1].innerText)) {
@@ -59,6 +70,7 @@ function checkSelectedCells() {
 
     if (isValid) {
       cell.classList.add("finished")
+      cell.onclick = {};
 
       // Remove the two selected cells from the unfinishedCells array
       let index = unfinishedCells.indexOf(cell)
@@ -82,27 +94,26 @@ function onclickcell(event) {
 
 function onclickadd(event) {
   let board = document.querySelector("#board")
-  let rowIndex = 0;
-  let colIndex = 0;
+  let emtpyFound = false;
 
-  for (let row in Array.from(board.children)) {
-    for (let cell in Array.from(row.children)) {
-      if (cell.dataset.id == undefined) break;
-      colIndex++
-    }
-    rowIndex++
-  }
-  console.log(rowIndex, colIndex)
   unfinishedCells.forEach(cell => {
-    
+    for(let i = 0; i < 20 && !emtpyFound; i++) {
+      for(let j = 0; j < 9 && !emtpyFound; j++) {
+        if (board.children[i].children[j].innerHTML == "") {
+          board.children[i].children[j].innerHTML = cell.innerHTML
+          unfinishedCells.push(board.children[i].children[j])
+          emtpyFound = !emtpyFound;
+        }
+      }
+    }
+
+    emtpyFound = false;
   })
 }
 
 document.onreadystatechange = function() {
   if (document.readyState == "complete") {
     let board = document.querySelector("#board")
-
-    
 
     for (let i = 0; i < 20; i++) {
       let newRow = this.createElement("div")
@@ -120,11 +131,12 @@ document.onreadystatechange = function() {
         if (j == 0) newCell.classList.add("left")
         if (j == 8) newCell.classList.add("right")
 
-        if (id < 35) {
+        if (unfinishedCells.length < 35) {
           newCell.innerText = Math.floor((Math.random() * 9) + 1)
-          newCell.dataset.id = id++;
           unfinishedCells.push(newCell)
         }
+
+        newCell.dataset.id = id++;
 
         newRow.appendChild(newCell)
       }

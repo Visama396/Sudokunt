@@ -51,6 +51,10 @@ html {
               background: #636363;
               color: #eee;
               font-weight: 700;
+
+              &:hover {
+                cursor: initial;
+              }
             }
 
             &.top {

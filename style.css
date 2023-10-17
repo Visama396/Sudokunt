@@ -50,6 +50,9 @@ html > body > main > div#board > div.row > span.cell.finished {
   color: #eee;
   font-weight: 700;
 }
+html > body > main > div#board > div.row > span.cell.finished:hover {
+  cursor: initial;
+}
 html > body > main > div#board > div.row > span.cell.top {
   border-top: transparent;
 }
