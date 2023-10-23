@@ -1,6 +1,14 @@
 let unfinishedCells = []
 let selectedCells = []
-var id = 0;
+var id = 1;
+
+function checkLines() {
+  let board = document.querySelector("#board")
+
+  for (let row of Array.from(board.children)) {
+    console.log(row)
+  }
+}
 
 function checkSelectedCells() {
   let isValid = false;
@@ -9,8 +17,6 @@ function checkSelectedCells() {
   // getBoundingClientRect have an x and y values
   let pos1 = selectedCells[0].getBoundingClientRect()
   let pos2 = selectedCells[1].getBoundingClientRect()
-  console.log(pos1)
-  console.log(pos2)
   
   // Check if the cells are in valid positions to be pair
   // First check if they are in the same row and they don't have any other cell in between
@@ -55,7 +61,7 @@ function checkSelectedCells() {
     posIsValid = true
   }
   // Now check if it is the last of one row and the first of the next row
-  else if () {
+  else if ((selectedCells[1].dataset.id % 9 == 0 && selectedCells[0].dataset.id % 10 == 0) || (selectedCells[0].dataset.id % 9 == 0 && selectedCells[1].dataset.id % 10 == 0)) {
     posIsValid = true
   }
 
@@ -80,6 +86,9 @@ function checkSelectedCells() {
 
   // And remove the cells from the selectedCells array
   selectedCells = []
+
+  // Lastly check lines to see if any has been completed
+  checkLines()
 }
 
 function onclickcell(event) {
