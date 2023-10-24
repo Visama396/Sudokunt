@@ -51,8 +51,9 @@ function checkSelectedCells() {
     }
   }
   // Now check if they are diagonal  
-  else if (Math.abs(pos1.y - pos2.y) == 30 && Math.abs(pos1.x - pos2.x) == 30) 
+  else if (Math.abs(pos1.y - pos2.y) % 30 == 0 && Math.abs(pos1.x - pos2.x) % 30 == 0) 
   {
+    let direction; // 0, 1, 2, 3
     posIsValid = true
   }
   // Now check if it is the last of one row and the first of the next row
