@@ -6,7 +6,7 @@ function checkLines() {
   let board = document.querySelector("#board")
 
   for (let row of Array.from(board.children)) {
-    console.log(row)
+    // console.log(row)
   }
 }
 
@@ -19,40 +19,35 @@ function checkSelectedCells() {
   let pos2 = selectedCells[1].getBoundingClientRect()
   
   // Check if the cells are in valid positions to be pair
-  // First check if they are in the same row and they don't have any other cell in between
-  if (pos1.y == pos2.y && pos1.x > pos2.x) {
-    /*console.log("Elements in the same row")
-    console.log(selectedCells[0].parentElement)*/
-    if ((pos1.x - pos2.x) / 30 == 1) posIsValid = true;
-    else {
-      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
-      console.log("Is further")
+  // First check if they are in the same row
+  if (pos1.y == pos2.y && pos1.x != pos2.x) {
+    if ((pos1.x - pos2.x) % 30 == 0 || (pos2.x - pos1.x) % 30 == 0) {
+      // Check if there are not unfinished cells between selectedCell0 and selectedCell1
+      let direction = (pos1.x > pos2.x)? -1 : 1;
+      let arr = Array.from(selectedCells[0].parentElement.children)
+      let finishedCellFound = true;
+      for (let i = arr.indexOf(selectedCells[0]); finishedCellFound && i != arr.indexOf(selectedCells[1]); i+=direction) {
+        if (arr[i] == selectedCells[0] || arr[i] == selectedCells[1]) continue;
+        finishedCellFound = arr[i].classList.contains("finished")
+      }
+
+      posIsValid = finishedCellFound;
     }
-  } else if (pos1.y == pos2.y && pos1.x < pos2.x) {
-    /*console.log("Elements in the same row")
-    console.log(selectedCells[0].parentElement)*/
-    if ((pos2.x - pos1.x) / 30 == 1) posIsValid = true;
-    else {
-      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
-      console.log("Is further")
-    }
-  } 
+  }
   // Now check if they belong to the same column
-  else if (pos1.x == pos2.x && pos1.y > pos2.y) {
-    /*console.log("Elements in the same column")
-    console.log(selectedCells[0].parentElement)*/
-    if ((pos1.y - pos2.y) / 30 == 1) posIsValid = true;
-    else {
-      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
-      console.log("Is further")
-    }
-  } else if (pos1.x == pos2.x && pos1.y < pos2.y) {
-    /*console.log("Elements in the same column")
-    console.log(selectedCells[0].parentElement)*/
-    if ((pos2.y - pos1.y) / 30 == 1) posIsValid = true;
-    else {
-      console.log(Array.from(selectedCells[0].parentElement.children).indexOf(selectedCells[0]))
-      console.log("Is further")
+  else if (pos1.x == pos2.x && pos1.y != pos2.y) {
+    if ((pos1.y - pos2.y) % 30 == 0 || (pos2.y - pos1.y) % 30 == 0) {
+      let direction = (pos1.y > pos2.y)? -1 : 1;
+      let arrrows = Array.from(selectedCells[0].parentElement.parentElement.children)
+      let arr0 = Array.from(selectedCells[0].parentElement.children)
+      let columnIndex = arr0.indexOf(selectedCells[0])
+      let finishedCellFound = true;
+      for (let i = arrrows.indexOf(selectedCells[0].parentElement); finishedCellFound && i != arrrows.indexOf(selectedCells[1].parentElement); i+=direction)
+      {
+        if (arrrows[i] == selectedCells[0].parentElement || arrrows[i] == selectedCells[1].parentElement) continue;
+        finishedCellFound = arrrows[i].children[columnIndex].classList.contains("finished")
+      }
+      posIsValid = finishedCellFound
     }
   }
   // Now check if they are diagonal  
