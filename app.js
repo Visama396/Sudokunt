@@ -6,7 +6,7 @@ function checkLines() {
   let board = document.querySelector("#board")
 
   for (let row of Array.from(board.children)) {
-    // console.log(row)
+    console.log(row)
   }
 }
 
@@ -17,11 +17,14 @@ function checkSelectedCells() {
   // getBoundingClientRect have an x and y values
   let pos1 = selectedCells[0].getBoundingClientRect()
   let pos2 = selectedCells[1].getBoundingClientRect()
+
+  const HEIGHT = pos1.height;
   
   // Check if the cells are in valid positions to be pair
-  // First check if they are in the same row
+  // First if they are in the same row
   if (pos1.y == pos2.y && pos1.x != pos2.x) {
-    if ((pos1.x - pos2.x) % 30 == 0 || (pos2.x - pos1.x) % 30 == 0) {
+    console.log("same row")
+    if ((pos1.x - pos2.x) % HEIGHT == 0 || (pos2.x - pos1.x) % HEIGHT == 0) {
       // Check if there are not unfinished cells between selectedCell0 and selectedCell1
       let direction = (pos1.x > pos2.x)? -1 : 1;
       let arr = Array.from(selectedCells[0].parentElement.children)
@@ -36,7 +39,8 @@ function checkSelectedCells() {
   }
   // Now check if they belong to the same column
   else if (pos1.x == pos2.x && pos1.y != pos2.y) {
-    if ((pos1.y - pos2.y) % 30 == 0 || (pos2.y - pos1.y) % 30 == 0) {
+    console.log("same column")
+    if ((pos1.y - pos2.y) % HEIGHT == 0 || (pos2.y - pos1.y) % HEIGHT == 0) {
       let direction = (pos1.y > pos2.y)? -1 : 1;
       let arrrows = Array.from(selectedCells[0].parentElement.parentElement.children)
       let arr0 = Array.from(selectedCells[0].parentElement.children)
@@ -51,14 +55,21 @@ function checkSelectedCells() {
     }
   }
   // Now check if they are diagonal  
-  else if (Math.abs(pos1.y - pos2.y) % 30 == 0 && Math.abs(pos1.x - pos2.x) % 30 == 0) 
+  else if (Math.abs(pos1.y - pos2.y) % HEIGHT == 0 && Math.abs(pos1.x - pos2.x) % HEIGHT == 0) 
   {
+    console.log("diagonal")
     let direction; // 0, 1, 2, 3
     posIsValid = true
   }
   // Now check if it is the last of one row and the first of the next row
   else if ((selectedCells[1].dataset.id % 9 == 0 && selectedCells[0].dataset.id % 10 == 0) || (selectedCells[0].dataset.id % 9 == 0 && selectedCells[1].dataset.id % 10 == 0)) {
+    console.log("last in row, first in row")
     posIsValid = true
+  }
+
+  // First check if the user hasn't selected the same cell twice
+  if (selectedCells[0] == selectedCells[1]) {
+    posIsValid = false 
   }
 
   // Now check if the pair is valid
@@ -77,14 +88,16 @@ function checkSelectedCells() {
       // Remove the two selected cells from the unfinishedCells array
       let index = unfinishedCells.indexOf(cell)
       unfinishedCells.splice(index, 1)
+
+      // Lastly check lines to see if any has been completed
+      // checkLines()
     }
   });
 
   // And remove the cells from the selectedCells array
   selectedCells = []
 
-  // Lastly check lines to see if any has been completed
-  checkLines()
+  
 }
 
 function onclickcell(event) {
